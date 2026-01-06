@@ -80,7 +80,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
       {/* Navigation */}
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -106,12 +106,12 @@ function App() {
               href={personalInfo.resumeLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:block px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-sm hover:bg-slate-800 transition-colors"
+              className="hidden md:block px-5 py-2.5 rounded-lg bg-emerald-600/10 border border-emerald-500/30 text-sm hover:border-emerald-400 hover:bg-emerald-600/20 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300"
             >
               Resume
             </a>
             <button
-              className="md:hidden text-slate-400"
+              className="md:hidden text-slate-400 hover:text-emerald-400 transition-colors"
               onClick={() => setMobileMenu(!mobileMenu)}
             >
               {mobileMenu ? <X size={24} /> : <Menu size={24} />}
@@ -119,12 +119,12 @@ function App() {
           </div>
         </div>
         {mobileMenu && (
-          <div className="md:hidden bg-slate-900 border-t border-slate-800 px-6 py-4">
+          <div className="md:hidden bg-black/95 backdrop-blur-xl border-t border-emerald-900/30 px-6 py-4 animate-slide-down">
             {navLinks.map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
-                className="block w-full text-left py-3 text-slate-400 hover:text-cyan-400 border-b border-slate-800 last:border-0"
+                className="block w-full text-left py-3 text-slate-400 hover:text-emerald-400 hover:translate-x-2 border-b border-slate-800 last:border-0 transition-all duration-300"
               >
                 {item}
               </button>
@@ -133,96 +133,183 @@ function App() {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center px-6 pt-20">
-        <div className="max-w-6xl mx-auto w-full">
+      {/* Hero Section - Enhanced with Photo */}
+      <section
+        id="hero"
+        className="min-h-screen flex items-center px-6 pt-20 relative overflow-hidden"
+      >
+        {/* Animated Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-black to-teal-500/5 animate-gradient"></div>
+
+        <div className="max-w-6xl mx-auto w-full relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+            {/* Left: Text Content */}
+            <div className="space-y-8 animate-fade-in-up">
               <div className="space-y-4">
                 <h1 className="text-5xl md:text-7xl font-bold leading-tight">
                   Hi, I'm{" "}
-                  <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent animate-shimmer">
                     {personalInfo.name}
                   </span>
                 </h1>
-                <div className="flex items-center gap-3 text-2xl md:text-3xl text-slate-400">
-                  <span className="text-cyan-500">{"<"}</span>
+                <div className="flex items-center gap-3 text-2xl md:text-3xl text-slate-400 animate-slide-right delay-200">
+                  <span className="text-emerald-500">{"<"}</span>
                   <span className="text-white font-mono">{typedText}</span>
-                  <span className="w-0.5 h-8 bg-cyan-400 animate-pulse"></span>
-                  <span className="text-cyan-500">{"/>"}</span>
+                  <span className="w-0.5 h-8 bg-emerald-400 animate-pulse"></span>
+                  <span className="text-emerald-500">{"/>"}</span>
                 </div>
               </div>
-              <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
+              <p className="text-lg text-slate-300 leading-relaxed max-w-lg animate-fade-in delay-300">
                 I build{" "}
-                <span className="text-cyan-400">
+                <span className="text-emerald-400 font-semibold">
                   AI systems that actually work
                 </span>{" "}
                 — {personalInfo.description}
               </p>
-              <div className="flex flex-wrap gap-4">
+
+              <div className="flex flex-wrap gap-4 animate-fade-in delay-400">
                 <button
                   onClick={() => scrollToSection("projects")}
-                  className="group px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl font-medium flex items-center gap-2 hover:opacity-90 transition-opacity shadow-lg shadow-cyan-500/25"
+                  className="group px-8 py-4 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-semibold flex items-center gap-2 transition-all duration-300 shadow-lg shadow-emerald-600/30 hover:shadow-emerald-500/50 hover:scale-105 active:scale-95"
                 >
-                  View Projects{" "}
+                  Let's get started{" "}
                   <ArrowRight
                     size={18}
-                    className="group-hover:translate-x-1 transition-transform"
+                    className="group-hover:translate-x-2 transition-transform"
                   />
                 </button>
+
                 <a
                   href={personalInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-xl font-medium border border-slate-700 hover:bg-slate-800/50 transition-colors flex items-center gap-2"
+                  className="px-8 py-4 rounded-xl font-semibold border-2 border-slate-700 hover:border-emerald-500 hover:bg-slate-900/50 transition-all duration-300 flex items-center gap-2"
                 >
                   <Github size={18} /> GitHub
                 </a>
               </div>
             </div>
+
+            <div className="flex justify-center lg:justify-end animate-fade-in delay-500">
+              <div className="relative group">
+                {/* Animated Border Glow */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 opacity-60 blur-3xl group-hover:opacity-100 transition-all duration-700 animate-pulse-glow"></div>
+
+                {/* Photo Container - FIXED */}
+                <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-emerald-500/50 shadow-2xl shadow-emerald-500/30 transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 group-hover:border-emerald-400">
+                  {/* Try to load image */}
+                  <img
+                    src="/photo.png"
+                    alt="Saravanan - AI Engineer"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Hide image if it fails, show fallback
+                      e.currentTarget.style.display = "none";
+                      const fallback = e.currentTarget.nextElementSibling;
+                      if (fallback)
+                        (fallback as HTMLElement).style.display = "flex";
+                    }}
+                  />
+
+                  {/* Fallback Placeholder (hidden by default) */}
+                  <div
+                    className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 via-emerald-950/30 to-slate-900 flex items-center justify-center"
+                    style={{ display: "none" }}
+                  >
+                    <div className="text-center animate-pulse">
+                      <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-emerald-500/20 flex items-center justify-center animate-scale-pulse">
+                        <Code2
+                          size={64}
+                          className="text-emerald-400 animate-glow"
+                        />
+                      </div>
+                      <p className="text-emerald-400 text-sm font-semibold">
+                        Your Photo Here
+                      </p>
+                      <p className="text-slate-500 text-xs mt-2">
+                        Add photo.png to /public/ folder
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative Elements with Animation */}
+                <div className="absolute -z-10 top-10 -right-10 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl animate-float"></div>
+                <div
+                  className="absolute -z-10 -bottom-10 -left-10 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl animate-float"
+                  style={{ animationDelay: "1s" }}
+                ></div>
+              </div>
+            </div>
           </div>
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500">
-            <span className="text-xs">Scroll to explore</span>
-            <ChevronDown size={20} className="animate-bounce" />
+
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-emerald-500 animate-bounce">
+            <span className="text-xs font-medium">Scroll to explore</span>
+            <ChevronDown size={20} className="animate-pulse" />
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-24 px-6">
+      {/* About Section - Black & Green Theme */}
+      <section
+        id="about"
+        className="py-24 px-6 bg-gradient-to-b from-black to-emerald-950/10"
+      >
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-4 mb-12">
-            <span className="text-cyan-400 font-mono text-sm">01.</span>
+          <div className="flex items-center gap-4 mb-12 animate-fade-in">
+            <span className="text-emerald-400 font-mono text-sm font-bold">
+              01.
+            </span>
             <h2 className="text-3xl md:text-4xl font-bold">About Me</h2>
-            <div className="flex-1 h-px bg-slate-800"></div>
+            <div className="flex-1 h-px bg-gradient-to-r from-emerald-800/50 to-transparent"></div>
           </div>
           <div className="grid md:grid-cols-5 gap-12">
-            <div className="md:col-span-3 space-y-6 text-slate-300 leading-relaxed">
-              <p className="text-lg">{aboutMe.paragraph1}</p>
-              <p>
+            <div className="md:col-span-3 space-y-6 text-slate-300 leading-relaxed animate-slide-left">
+              <p className="text-lg hover:text-slate-200 transition-colors duration-300">
+                {aboutMe.paragraph1}
+              </p>
+              <p className="hover:text-slate-200 transition-colors duration-300">
                 My journey started in{" "}
-                <span className="text-cyan-400">Unity development</span>,
-                building AR/VR simulations with AI integration. That foundation
-                taught me how technology can create immersive, intelligent
-                experiences. Today, I focus entirely on{" "}
-                <span className="text-cyan-400">AI agents and automation</span>{" "}
+                <span className="text-emerald-400 font-semibold">
+                  Unity development
+                </span>
+                , building AR/VR simulations with AI integration. That
+                foundation taught me how technology can create immersive,
+                intelligent experiences. Today, I focus entirely on{" "}
+                <span className="text-emerald-400 font-semibold">
+                  AI agents and automation
+                </span>{" "}
                 — building chatbots that understand context, agents that make
                 decisions, and systems that work autonomously.
               </p>
-              <p>{aboutMe.paragraph3}</p>
+              <p className="hover:text-slate-200 transition-colors duration-300">
+                {aboutMe.paragraph3}
+              </p>
             </div>
-            <div className="md:col-span-2">
-              <div className="bg-slate-900/50 rounded-xl p-6 border border-slate-800">
-                <h3 className="text-cyan-400 font-medium mb-4 text-sm uppercase tracking-wider">
+            <div className="md:col-span-2 animate-slide-right">
+              <div className="bg-gradient-to-br from-emerald-950/50 to-black rounded-xl p-6 border border-emerald-800/30 hover:border-emerald-600/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-500/10 hover:scale-105">
+                <h3 className="text-emerald-400 font-semibold mb-4 text-sm uppercase tracking-wider flex items-center gap-2">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                   Quick Info
                 </h3>
                 <div className="space-y-3 text-sm">
-                  {Object.entries(aboutMe.quickInfo).map(([key, value]) => (
-                    <div key={key} className="flex justify-between">
-                      <span className="text-slate-500 capitalize">{key}</span>
-                      <span>{value}</span>
-                    </div>
-                  ))}
+                  {Object.entries(aboutMe.quickInfo).map(
+                    ([key, value], index) => (
+                      <div
+                        key={key}
+                        className="flex justify-between items-center group animate-fade-in"
+                        style={{ animationDelay: `${index * 100}ms` }}
+                      >
+                        <span className="text-slate-500 capitalize group-hover:text-emerald-400 transition-colors">
+                          {key}
+                        </span>
+                        <span className="font-medium text-slate-300 group-hover:text-emerald-300 transition-colors">
+                          {value}
+                        </span>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </div>
