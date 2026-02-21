@@ -50,9 +50,9 @@ export interface Experience {
 
 export const personalInfo: PersonalInfo = {
   name: "Saravanan",
-  email: "your@email.com",
+  email: "sarvoaarumugam@gmail.com",
   github: "https://github.com/yourusername",
-  linkedin: "https://linkedin.com/in/yourusername",
+  linkedin: "https://www.linkedin.com/in/saravanan-aarumugam-ai/",
   resumeLink: "#",
   description:
     "intelligent chatbots, autonomous agents, and automation tools that solve real business problems.",
@@ -131,7 +131,7 @@ export const projects: Project[] = [
     tech: ["Python", "FastAPI", "Strands", "LangChain", "OpenAI GPT", "DALL-E"],
     gradient: "from-cyan-500 to-blue-600",
     iconName: "Bot",
-    github: "#",
+    github: "https://github.com/sarvoaarumugam/Sarvo-AI_Agent_Chatbot",
   },
   {
     id: 2,
@@ -149,7 +149,7 @@ export const projects: Project[] = [
     tech: ["Python", "FastAPI", "ChromaDB", "LangChain", "OpenAI", "PyPDF2"],
     gradient: "from-teal-500 to-emerald-600",
     iconName: "FileText",
-    github: "#",
+    github: "https://github.com/sarvoaarumugam/Sarvo-Rag_Chatbot",
   },
   {
     id: 3,
@@ -167,7 +167,7 @@ export const projects: Project[] = [
     tech: ["Python", "FastAPI", "WebSocket", "OpenAI Realtime API", "Strands"],
     gradient: "from-orange-500 to-amber-600",
     iconName: "Mic",
-    github: "#",
+    github: "https://github.com/sarvoaarumugam/Sarvo-Real_Time_Voice_Chat",
   },
 ];
 
@@ -176,7 +176,7 @@ export const experience: Experience[] = [
     id: 1,
     period: "2023 - Present",
     role: "AI Engineer",
-    company: "AI Company, Bangalore",
+    company: "Falcon Reality, Bangalore",
     description:
       "Building production AI agent systems and automation tools. Developing multi-agent architectures with LangChain and Strands. Creating RAG systems, chatbots, and real-time voice AI applications.",
     color: "cyan",
@@ -186,7 +186,7 @@ export const experience: Experience[] = [
     id: 2,
     period: "2022 - 2023",
     role: "Unity Developer + AI Integration",
-    company: "Same Company",
+    company: "Falcon Reality, Bangalore",
     description:
       "Developed AR/VR simulations integrated with AI capabilities. Built immersive training applications using Unity and C#. Transitioned focus from game development to AI engineering.",
     color: "blue",

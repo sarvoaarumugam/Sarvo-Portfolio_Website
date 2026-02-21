@@ -1,5 +1,6 @@
 // src/App.tsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import emailjs from "@emailjs/browser";
 import {
   ChevronDown,
   Mail,
@@ -47,6 +48,11 @@ function App() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const text = roles[roleIndex];
@@ -60,7 +66,7 @@ function App() {
         clearInterval(typing);
         setTimeout(
           () => setRoleIndex((prev) => (prev + 1) % roles.length),
-          2000
+          2000,
         );
       }
     }, 100);
@@ -208,16 +214,16 @@ function App() {
                 </button>
 
                 <a
-                  href={personalInfo.github}
+                  href={personalInfo.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group px-8 py-4 rounded-xl font-semibold border-2 border-slate-700 hover:border-purple-500 hover:bg-slate-900/50 transition-all duration-300 flex items-center gap-2 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105"
                 >
-                  <Github
+                  <Linkedin
                     size={18}
-                    className="group-hover:rotate-12 transition-transform duration-300"
+                    className="group-hover:scale-110 transition-transform duration-300"
                   />
-                  <span>GitHub</span>
+                  <span>LinkedIn</span>
                 </a>
               </div>
             </div>
@@ -225,10 +231,10 @@ function App() {
             <div className="flex justify-center lg:justify-end animate-fade-in delay-500">
               <div className="relative group">
                 {/* Animated Border Glow */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 opacity-60 blur-3xl group-hover:opacity-100 transition-all duration-700 animate-pulse-glow"></div>
+                {/* <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 opacity-60 blur-3xl group-hover:opacity-100 transition-all duration-700 animate-pulse-glow"></div> */}
 
                 {/* Photo Container - FIXED */}
-                <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-purple-500/50 shadow-2xl shadow-purple-500/30 transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 group-hover:border-cyan-400">
+                <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4  transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 :border-cyan-400">
                   {/* Try to load image */}
                   <img
                     src="/photo.png"
@@ -352,7 +358,7 @@ function App() {
                           {value}
                         </span>
                       </div>
-                    )
+                    ),
                   )}
                 </div>
               </div>
@@ -496,9 +502,11 @@ function App() {
                                   <span className="text-purple-400 flex-shrink-0">
                                     →
                                   </span>
-                                  <span className="leading-relaxed">{feature}</span>
+                                  <span className="leading-relaxed">
+                                    {feature}
+                                  </span>
                                 </div>
-                              )
+                              ),
                             )}
                           </div>
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-700/50">
@@ -619,8 +627,8 @@ function App() {
             Let's Connect
           </h2>
           <p className="text-slate-400 mb-12 max-w-lg mx-auto text-lg leading-relaxed">
-            Looking for an AI Engineer who builds systems that work? Let's
-            discuss how I can help with your next project.
+            {/*Looking for an AI Engineer who builds systems that work? Let's
+            discuss how I can help with your next project.*/}
           </p>
           <div className="flex justify-center gap-6 mb-12">
             <a
@@ -653,56 +661,98 @@ function App() {
                 LinkedIn
               </span>
             </a>
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative flex flex-col items-center gap-3 p-6 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/50 border border-slate-700 hover:border-purple-500/50 transition-all duration-500 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/30 backdrop-blur-sm overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <Github
-                className="relative text-purple-400 group-hover:text-cyan-400 group-hover:scale-110 group-hover:rotate-12 transition-all"
-                size={28}
-                strokeWidth={2}
-              />
-              <span className="relative text-sm text-slate-400 group-hover:text-slate-300 font-medium">
-                GitHub
-              </span>
-            </a>
           </div>
-          <div className="relative bg-gradient-to-br from-slate-900/80 to-slate-800/50 rounded-2xl p-8 border border-slate-700 backdrop-blur-sm overflow-hidden">
+          <form
+            ref={formRef}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setIsSubmitting(true);
+              setSubmitStatus("idle");
+
+              // EmailJS configuration
+              emailjs
+                .sendForm(
+                  "YOUR_SERVICE_ID", // You'll get this from EmailJS dashboard
+                  "template_348t2x6", // You'll get this from EmailJS dashboard
+                  formRef.current!,
+                  "YOUR_PUBLIC_KEY", // You'll get this from EmailJS dashboard
+                )
+                .then(() => {
+                  setIsSubmitting(false);
+                  setSubmitStatus("success");
+                  formRef.current?.reset();
+                  // Reset success message after 5 seconds
+                  setTimeout(() => setSubmitStatus("idle"), 5000);
+                })
+                .catch(() => {
+                  setIsSubmitting(false);
+                  setSubmitStatus("error");
+                  // Reset error message after 5 seconds
+                  setTimeout(() => setSubmitStatus("idle"), 5000);
+                });
+            }}
+            className="relative bg-gradient-to-br from-slate-900/80 to-slate-800/50 rounded-2xl p-8 border border-slate-700 backdrop-blur-sm overflow-hidden"
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-cyan-600/5"></div>
             <div className="relative space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="from_name"
                   placeholder="Your Name"
-                  className="w-full px-5 py-3.5 bg-slate-800/80 border border-slate-700 rounded-xl focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/20 outline-none transition-all duration-300 text-white placeholder:text-slate-500"
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-5 py-3.5 bg-slate-800/80 border border-slate-700 rounded-xl focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/20 outline-none transition-all duration-300 text-white placeholder:text-slate-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
                 <input
                   type="email"
+                  name="from_email"
                   placeholder="Your Email"
-                  className="w-full px-5 py-3.5 bg-slate-800/80 border border-slate-700 rounded-xl focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/20 outline-none transition-all duration-300 text-white placeholder:text-slate-500"
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-5 py-3.5 bg-slate-800/80 border border-slate-700 rounded-xl focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/20 outline-none transition-all duration-300 text-white placeholder:text-slate-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
               </div>
               <textarea
+                name="message"
                 placeholder="Your Message"
                 rows={5}
-                className="w-full px-5 py-3.5 bg-slate-800/80 border border-slate-700 rounded-xl focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/20 outline-none transition-all duration-300 resize-none text-white placeholder:text-slate-500"
+                required
+                disabled={isSubmitting}
+                className="w-full px-5 py-3.5 bg-slate-800/80 border border-slate-700 rounded-xl focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/20 outline-none transition-all duration-300 resize-none text-white placeholder:text-slate-500 disabled:opacity-50 disabled:cursor-not-allowed"
               />
+
+              {/* Status Messages */}
+              {submitStatus === "success" && (
+                <div className="p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-xl text-green-400 text-center font-semibold animate-fade-in">
+                  ✓ Message sent successfully! I'll get back to you soon.
+                </div>
+              )}
+              {submitStatus === "error" && (
+                <div className="p-4 bg-gradient-to-r from-red-500/10 to-rose-500/10 border border-red-500/30 rounded-xl text-red-400 text-center font-semibold animate-fade-in">
+                  ✗ Failed to send message. Please try again or email me
+                  directly.
+                </div>
+              )}
+
               <button
-                type="button"
-                className="group relative w-full py-4 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-xl font-bold hover:from-purple-500 hover:to-cyan-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02] overflow-hidden"
+                type="submit"
+                disabled={isSubmitting}
+                className="group relative w-full py-4 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-xl font-bold hover:from-purple-500 hover:to-cyan-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02] overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <span className="relative z-10">Send Message</span>
-                <ArrowRight
-                  size={18}
-                  className="relative z-10 group-hover:translate-x-1 transition-transform"
-                />
+                <span className="relative z-10">
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </span>
+                {!isSubmitting && (
+                  <ArrowRight
+                    size={18}
+                    className="relative z-10 group-hover:translate-x-1 transition-transform"
+                  />
+                )}
                 <span className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </section>
 
