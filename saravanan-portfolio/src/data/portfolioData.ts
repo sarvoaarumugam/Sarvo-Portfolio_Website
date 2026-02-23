@@ -146,7 +146,7 @@ export const projects: Project[] = [
       "Cites sources in responses",
       "Persistent storage with ChromaDB",
     ],
-    tech: ["Python", "FastAPI", "ChromaDB", "LangChain", "OpenAI", "PyPDF2"],
+    tech: ["Python", "FastAPI", "ChromaDB", "LangChain", "OpenAI", "PymuPDF"],
     gradient: "from-teal-500 to-emerald-600",
     iconName: "FileText",
     github: "https://github.com/sarvoaarumugam/Sarvo-Rag_Chatbot",

@@ -1,6 +1,5 @@
 // src/App.tsx
 import { useState, useEffect, useRef } from "react";
-import emailjs from "@emailjs/browser";
 import {
   ChevronDown,
   Mail,
@@ -669,25 +668,30 @@ function App() {
               setIsSubmitting(true);
               setSubmitStatus("idle");
 
-              // EmailJS configuration
-              emailjs
-                .sendForm(
-                  "YOUR_SERVICE_ID", // You'll get this from EmailJS dashboard
-                  "template_348t2x6", // You'll get this from EmailJS dashboard
-                  formRef.current!,
-                  "YOUR_PUBLIC_KEY", // You'll get this from EmailJS dashboard
-                )
-                .then(() => {
+              const formData = new FormData(formRef.current!);
+              const name = formData.get("from_name") as string;
+              const email = formData.get("from_email") as string;
+              const message = formData.get("message") as string;
+
+              fetch("/api/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, message }),
+              })
+                .then((res) => {
                   setIsSubmitting(false);
-                  setSubmitStatus("success");
-                  formRef.current?.reset();
-                  // Reset success message after 5 seconds
-                  setTimeout(() => setSubmitStatus("idle"), 5000);
+                  if (res.ok) {
+                    setSubmitStatus("success");
+                    formRef.current?.reset();
+                    setTimeout(() => setSubmitStatus("idle"), 5000);
+                  } else {
+                    setSubmitStatus("error");
+                    setTimeout(() => setSubmitStatus("idle"), 5000);
+                  }
                 })
                 .catch(() => {
                   setIsSubmitting(false);
                   setSubmitStatus("error");
-                  // Reset error message after 5 seconds
                   setTimeout(() => setSubmitStatus("idle"), 5000);
                 });
             }}
@@ -768,13 +772,13 @@ function App() {
             . Building the future with AI.
           </p>
           <div className="flex items-center gap-2 text-slate-500 text-sm">
-            <Code2 size={14} className="text-purple-400" />
-            <span>
+            {/* <Code2 size={14} className="text-purple-400" /> */}
+            {/* <span>
               Built with{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 font-semibold">
                 React + Tailwind
               </span>
-            </span>
+            </span> */}
           </div>
         </div>
       </footer>

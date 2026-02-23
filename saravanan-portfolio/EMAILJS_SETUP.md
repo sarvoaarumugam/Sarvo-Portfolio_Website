@@ -27,11 +27,13 @@ Follow these steps to enable the contact form to send emails directly to your Gm
 **Template Name:** `Portfolio Contact`
 
 **Subject:**
+
 ```
 New Portfolio Message from {{from_name}}
 ```
 
 **Content:**
+
 ```
 You have received a new message from your portfolio website!
 
@@ -60,22 +62,22 @@ Open `src/App.tsx` and find these lines (around line 671-675):
 
 ```typescript
 emailjs.sendForm(
-  'YOUR_SERVICE_ID',     // Replace with your Service ID
-  'YOUR_TEMPLATE_ID',    // Replace with your Template ID
+  "YOUR_SERVICE_ID", // Replace with your Service ID
+  "YOUR_TEMPLATE_ID", // Replace with your Template ID
   formRef.current!,
-  'YOUR_PUBLIC_KEY'      // Replace with your Public Key
-)
+  "YOUR_PUBLIC_KEY", // Replace with your Public Key
+);
 ```
 
 Replace with your actual values:
 
 ```typescript
 emailjs.sendForm(
-  'service_xxxxxxx',     // Your Service ID from Step 2
-  'template_xxxxxxx',    // Your Template ID from Step 3
+  "service_xxxxxxx", // Your Service ID from Step 2
+  "template_xxxxxxx", // Your Template ID from Step 3
   formRef.current!,
-  'xxxxxxxxxxxxxxxxxx'   // Your Public Key from Step 4
-)
+  "xxxxxxxxxxxxxxxxxx", // Your Public Key from Step 4
+);
 ```
 
 ## Step 6: Test the Form
@@ -110,5 +112,34 @@ Your contact form is now fully functional! No need for backend servers or compli
 ---
 
 **Need Help?**
+
 - EmailJS Docs: https://www.emailjs.com/docs/
 - Test emails in EmailJS dashboard before using in production
+
+Deploy steps
+Step 1 — Push to GitHub
+
+git add .
+git commit -m "add vercel deployment"
+git push
+Step 2 — Go to vercel.com → Sign up free with GitHub
+
+Step 3 — Import your repo
+
+Click Add New Project → select your GitHub repo
+Set Root Directory to saravanan-portfolio
+Framework will auto-detect as Vite
+Click Deploy
+Step 4 — Add Environment Variables in Vercel
+
+Go to your project → Settings → Environment Variables → add these:
+
+Name Value
+SMTP_HOST smtp.gmail.com
+SMTP_PORT 587
+SMTP_USERNAME sarvoaarumugam@gmail.com
+SMTP_PASSWORD your app password
+SMTP_FROM_EMAIL sarvoaarumugam@gmail.com
+Step 5 — Redeploy after adding env vars (Vercel dashboard → Deployments → Redeploy)
+
+Local dev still works the same with npm run dev — Vite proxy + server.js handles emails locally. On Vercel, the api/send-email.js serverless function takes over automatically.
