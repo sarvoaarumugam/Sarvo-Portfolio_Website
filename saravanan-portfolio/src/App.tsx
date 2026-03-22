@@ -109,7 +109,7 @@ function App() {
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <a
               href={personalInfo.resumeLink}
               target="_blank"
@@ -126,7 +126,7 @@ function App() {
             >
               {mobileMenu ? <X size={24} /> : <Menu size={24} />}
             </button>
-          </div>
+          </div> */}
         </div>
         {mobileMenu && (
           <div className="md:hidden bg-black/95 backdrop-blur-xl border-t border-purple-900/30 px-6 py-4 animate-slide-down">
@@ -630,20 +630,6 @@ function App() {
             discuss how I can help with your next project.*/}
           </p>
           <div className="flex justify-center gap-6 mb-12">
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="group relative flex flex-col items-center gap-3 p-6 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/50 border border-slate-700 hover:border-purple-500/50 transition-all duration-500 hover:scale-110 hover:shadow-xl hover:shadow-purple-500/30 backdrop-blur-sm overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <Mail
-                className="relative text-purple-400 group-hover:text-cyan-400 group-hover:scale-110 transition-all"
-                size={28}
-                strokeWidth={2}
-              />
-              <span className="relative text-sm text-slate-400 group-hover:text-slate-300 font-medium">
-                Email
-              </span>
-            </a>
             <a
               href={personalInfo.linkedin}
               target="_blank"

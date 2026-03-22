@@ -117,7 +117,7 @@ export const technologies: string[] = [
 export const projects: Project[] = [
   {
     id: 1,
-    title: "Sarvo AI Agent",
+    title: "AI Agent",
     subtitle: "Multi-Agent Chatbot System",
     description:
       "An intelligent chatbot powered by a Master Agent that orchestrates multiple specialized sub-agents. Ask anything - it automatically routes your query to the right agent.",
