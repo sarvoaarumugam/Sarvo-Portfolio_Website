@@ -519,7 +519,7 @@ function App() {
                                 </span>
                               ))}
                             </div>
-                            <a
+                            {/* <a
                               href={project.github}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -536,7 +536,7 @@ function App() {
                                 size={14}
                                 className="text-cyan-400 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 group-hover/link:text-purple-400 transition-all"
                               />
-                            </a>
+                            </a> */}
                           </div>
                         </div>
                       </div>
