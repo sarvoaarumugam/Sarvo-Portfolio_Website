@@ -174,7 +174,7 @@ export const projects: Project[] = [
 export const experience: Experience[] = [
   {
     id: 1,
-    period: "2023 - Present",
+    period: "2025 - Present",
     role: "AI Engineer",
     company: "Falcon Reality, Bangalore",
     description:
@@ -184,7 +184,7 @@ export const experience: Experience[] = [
   },
   {
     id: 2,
-    period: "2022 - 2023",
+    period: "2024 - 2025",
     role: "Unity Developer + AI Integration",
     company: "Falcon Reality, Bangalore",
     description:
